@@ -1,0 +1,7 @@
+.zig-cache/
+zig-out/
+
+./idea
+.idea
+.DS_Store
+Thumbs.db
