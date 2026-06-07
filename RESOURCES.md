@@ -44,6 +44,14 @@ https://github.com/axboe/liburing/
 
 ---
 
+## Tiger Style
+
+**Tiger Style — tigerstyle.dev**
+The community distillation of TigerBeetle's engineering methodology — covering static allocation, assertion philosophy, explicit control flow, and the NASA Power of Ten rules that underpin the development constraints applied in this codebase. The direct reference for the Tiger Style principles governing this project's benchmark harness.
+https://tigerstyle.dev/
+
+---
+
 ## Zig
 
 **Introduction to Zig — Pedro Duarte Faria**
