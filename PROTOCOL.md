@@ -29,7 +29,7 @@
 
 ## 1. Background & Structural Context
 
-Modern high-performance Linux applications — database engines, storage systems, and network proxies — historically leaned on **readiness-based I/O multiplexing** via the `epoll` interface (introduced in Linux 2.5.45). Under this model, the kernel notifies userspace that a file descriptor is *ready*; the application must then issue the actual I/O system call, incurring a **transaction round-trip cost** per unit.
+Modern high-performance Linux applications, database engines, storage systems, and network proxies, historically leaned on **readiness-based I/O multiplexing** via the `epoll` interface (introduced in Linux 2.5.45). Under this model, the kernel notifies userspace that a file descriptor is *ready*; the application must then issue the actual I/O system call, incurring a **transaction round-trip cost** per unit.
 
 In 2019, **`io_uring`** (merged in Linux 5.1) introduced a **completion-based asynchronous model** mapped across two shared-memory ring buffers: the **Submission Queue (SQ)** and the **Completion Queue (CQ)**. Applications write submission entries without blocking; the kernel consumes them asynchronously and posts completions. Through features like `SQPOLL` mode, `io_uring` can process entire I/O pipelines with **zero system calls**, offering deep architectural advantages over `epoll`.
 
@@ -106,11 +106,11 @@ Every primary source is scored independently on an **ordinal scale** (0 = absent
 
 ## 4. Synthesis & Analysis Plan
 
-- **Performance Trajectory Mapping** — Chronologically mapping both interfaces across kernel shifts to visualize convergence.
+- **Performance Trajectory Mapping** —> Chronologically mapping both interfaces across kernel shifts to visualize convergence.
 
-- **Workload Pattern Matrices** — Tabulating data outcomes categorized by resource profile (Network-bound vs Block Storage-bound).
+- **Workload Pattern Matrices** —> Tabulating data outcomes categorized by resource profile (Network-bound vs Block Storage-bound).
 
-- **Gap Identification** — Documenting structural patterns and hardware configurations absent or underrepresented in Western literature, ensuring direct alignment with the sub-Saharan infrastructure and networking mandates of the ComNet Laboratory.
+- **Gap Identification** —> Documenting structural patterns and hardware configurations absent or underrepresented in Western literature, ensuring direct alignment with the sub-Saharan infrastructure and networking mandates of the ComNet Laboratory.
 
 ---
 

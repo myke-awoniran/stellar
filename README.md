@@ -1,6 +1,6 @@
 # Comparative Analysis of Readiness-Based (epoll) and Completion-Based (io_uring) I/O Models in the Linux Operating System
 
-**A Pure-Systems Scoping Review and Empirical Evaluation Harness**
+**A Scoping Review and Empirical Evaluation Harness**
 
 ---
 
@@ -8,7 +8,7 @@
 >
 > This repository contains active, unmerged academic research artifacts, clean-room primitives, and benchmark pipelines. Interfaces, documentation, and data schemas are subject to breaking changes as the empirical collection phase progresses.
 >
-> _Current Lifecycle Phase: Synthesis Protocol & Primary Appraisal Screening — Target Completion: May 2026_
+> _Current Lifecycle Phase: Synthesis Protocol & Primary Appraisal Screening — Target Completion: November 2026_
 
 ---
 
@@ -42,25 +42,25 @@ The empirical benchmarking suites and literature scoping framework (SALSA) are s
 
 ---
 
-**RQ1 — Concurrency Threshold & Throughput Crossover**
+**RQ1 —> Concurrency Threshold & Throughput Crossover**
 
 > At what concurrency levels (1,000 to 100,000 concurrent operations) does `io_uring` outperform `epoll` in terms of raw throughput (IOPS and MB/s), and at what exact saturation point does `epoll`'s system call frequency become the binding constraint on CPU utilization?
 
 ---
 
-**RQ2 — Tail Latency Profile and Latency Variance Under Saturation**
+**RQ2 —> Tail Latency Profile and Latency Variance Under Saturation**
 
 > How do tail latency (p95, p99, p999) and latency variance differ between readiness-based and completion-based I/O models when driven to saturation, and what is the statistical distribution shape of each model's latency under load?
 
 ---
 
-**RQ3 — Latency Stability Under Pressure**
+**RQ3 —> Latency Stability Under Pressure**
 
 > Does `io_uring` provide more stable, lower-variance latency than `epoll` under sustained and bursty high-pressure workloads, particularly in the presence of kernel context-switching cascades and ring buffer backpressure?
 
 ---
 
-**RQ4 — Syscall and CPU Overhead Per Operation**
+**RQ4 —> Syscall and CPU Overhead Per Operation**
 
 > What is the exact system call count and CPU overhead per million operations for each I/O model, and how does this overhead evolve across Linux kernel generations (5.x baseline to 6.x with direct descriptors and `SQPOLL`)?
 
@@ -253,15 +253,15 @@ The benchmark pipeline produces structured output suitable for statistical analy
 
 ## Why These Questions Matter
 
-**RQ1 and RQ3 — Concurrency Crossover and Stability**
+**RQ1 and RQ3 —> Concurrency Crossover and Stability**
 
 In production environments, the failure mode is not average performance — it is what happens at scale. At low concurrency, `epoll`'s overhead is negligible. The research question is where the model collapses: the exact inflection point at which system call frequency saturates the CPU and tail latency becomes non-deterministic. Because this codebase uses Tiger Style (zero allocations in the hot path), the benchmarks isolate the I/O model's intrinsic cost from allocator noise, producing a signal that is clean enough to characterize the crossover precisely.
 
-**RQ2 — Tail Latency Under Saturation**
+**RQ2 —> Tail Latency Under Saturation**
 
 When a network spike hits an `epoll`-based server, it triggers a cascade of context switches. The 99th percentile of operations experiences disproportionate delay — not because the hardware is slow, but because the model serializes notification and execution through the kernel boundary. RQ2 will produce full latency distribution histograms for both models, characterizing not just where the tail is, but how fat it is and how it grows under pressure.
 
-**RQ4 — Syscall and CPU Overhead Across Kernel Generations**
+**RQ4 —> Syscall and CPU Overhead Across Kernel Generations**
 
 `io_uring` has evolved significantly across kernel versions. Early 5.x implementations required fixed file setups and carried measurable syscall overhead. Modern 6.x kernels, with direct descriptors and `SQPOLL`, eliminate entire classes of overhead. RQ4 will produce a per-kernel-generation breakdown of syscall counts and CPU cycles per million operations — a dataset that does not currently exist in the literature at this level of instrumentation precision.
 
