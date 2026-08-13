@@ -78,7 +78,7 @@ research questions:
 
 To understand why these research questions are structured as they are, it is essential to map the foundational mechanics
 of how `epoll` and `io_uring` behave inside the Linux kernel.
-
+ 
 ---
 
 ### The Readiness-Based Model: `epoll`
